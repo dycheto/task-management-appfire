@@ -1,4 +1,4 @@
-import './Register.scss'
+import './Register.css'
 
 import { useState } from 'react';
 import * as authService from '../../services/authServices';
