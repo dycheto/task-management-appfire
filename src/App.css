@@ -4,9 +4,7 @@
     box-sizing: border-box;
 }
 
-.App {
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+body {
+    overflow-y: hidden;
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/task-management-appfire.appspot.com/o/cork.avif?alt=media&token=8d074728-e7b6-43bf-a9dd-679b8d305640&_gl=1*hty6tg*_ga*MTY4MDk3OTI3Mi4xNjc0NzI1MzA2*_ga_CW55HF8NVT*MTY4NjU4ODU5MS43MS4xLjE2ODY1OTAzMDQuMC4wLjA.");
 }
