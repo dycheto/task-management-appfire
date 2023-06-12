@@ -1,37 +1,53 @@
 import { useAuth } from '../hooks/useAuth';
-import * as taskServices from '../services/taskServices';
+import { BsFillPinAngleFill } from 'react-icons/bs'
 
 export default function Task({
     task,
-    onEditClick
+    onEditClick,
+    setShowConfirmDialog,
+    setTaskIdToDelete
 }) {
-
     const { userData } = useAuth();
-    const { title, description, taskId, timestamp } = task;
+    const { title, description, taskId, timestamp, category } = task;
     const date = new Date(timestamp.seconds * 1000);
 
+    let taskClass = ``;
+    let pinClass = ``;
+
+    if (category === 'Daily task') {
+        pinClass = 'daily-pin';
+        taskClass = `daily-task`;
+    } else if (category === 'Weekly task') {
+        pinClass = 'weekly-pin';
+        taskClass = `weekly-task`;
+    }
 
     const onDeleteClick = () => {
-        taskServices.deleteTask(userData, taskId).then(() => {
-            window.location.reload(false);
-        })
+        setShowConfirmDialog(true);
+        setTaskIdToDelete(taskId);
     }
 
     return (
-        <>
-            <div className="task">
-                <h2 className="task-title">{title}</h2>
-                <p className="task-description">{description}</p>
+        <div className={`task ${taskClass}`}>
+            <div className="task-note">
+                <BsFillPinAngleFill size={50} className={`pin ${pinClass}`}/>
+                <div className="note-content">
+                    <h2 className="task-title">{title}</h2>
+                    <p className="task-description">{description}</p>
+
+                </div>
                 <div className="task-footer">
                     <time className="task-time-created">{date.toLocaleString()} </time>
                     <div className="task-buttons">
                         <button className="edit-task" onClick={() => onEditClick(task)}>
                             Edit
                         </button>
-                        <button className="delete-task" onClick={onDeleteClick}>Delete</button>
+                        <button className="delete-task" onClick={onDeleteClick}>
+                            Delete
+                        </button>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
