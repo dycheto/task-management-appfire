@@ -4,6 +4,7 @@ import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import Main from './pages/Main/Main';
 import Logout from './components/Logout';
+import Footer from './components/Footer';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from './hooks/useAuth';
 
@@ -25,6 +26,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/logout' element={<Logout />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
