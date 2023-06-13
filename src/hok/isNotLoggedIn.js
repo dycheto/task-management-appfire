@@ -5,7 +5,7 @@ export const isNotLoggedIn = (Component) => {
 
     const WrapperComponent = (props) => {
 
-        const { isAuthenticated } = useAuth();
+        const { isAuthenticated } = useAuth() || {};
 
         return isAuthenticated === false
             ? < Component {...props} />

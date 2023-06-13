@@ -11,7 +11,6 @@ export default function useLocalStorage(key, initialValue) {
                 ? JSON.parse(item)
                 : initialValue
         } catch (err) {
-            console.log(err);
             return initialValue;
         }
     })
@@ -22,7 +21,6 @@ export default function useLocalStorage(key, initialValue) {
 
             setState(value);
         } catch (err) {
-            console.log(err);
         }
     }
 

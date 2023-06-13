@@ -15,7 +15,7 @@ import { onSnapshot, doc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { isLoggedIn } from '../../hok/isLoggedIn';
 
-const Main = () => {
+const Main = ({props}) => {
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
     const [TaskIdToDelete, setTaskIdToDelete] = useState('');
     const [editMode, setEditMode] = useState(false);
@@ -24,7 +24,7 @@ const Main = () => {
     const [tasks, setTasks] = useState([]);
     const [category, setCategory] = useState('');
     const [dataForExport, setDataForExport] = useState([]);
-    const { userData } = useAuth();
+    const { userData } = useAuth() || {};
 
 
     useEffect(() => {
@@ -52,7 +52,6 @@ const Main = () => {
 
     const handleEditClick = (task) => {
         setNewTask(task);
-        console.log(task.taskId);
         setEditMode(true);
         setShowModal(true);
     };
@@ -109,69 +108,68 @@ const Main = () => {
     }
 
     return (
-        <>
-            <div className="container">
-                <div className="side-bar">
+        <div className="container" data-testid="main-container">
+            <div className="side-bar" data-testid="side-container">
 
-                    <Button
-                        className="add-task category-button"
-                        title="Add new task"
-                        handleClick={handleAddTask}
-                    />
+                <Button
+                    className="add-task category-button"
+                    title="Add new task"
+                    handleClick={handleAddTask}
+                />
 
-                    <Button
-                        className="category-button"
-                        title="Show all"
-                        handleClick={() => handleCategoryFilter('Show all')}
-                    />
-                    <Button
-                        className="category-button"
-                        title="Daily tasks"
-                        handleClick={() => handleCategoryFilter('Daily task')}
-                    />
-                    <Button
-                        className="category-button"
-                        title="Weekly tasks"
-                        handleClick={() => handleCategoryFilter('Weekly task')}
-                    />
-                    {tasks.length > 0 &&
-                        <div className="export-button">
-                            <button className='category-button' onClick={handleExportTasks}>
-                                <CSVLink data={dataForExport}>Download current tasks</CSVLink>
-                            </button>
-                        </div>}
-                </div>
-                <div className="content">
-                    {tasks.length > 0
-                        ? tasks.map((task) => (
-                            <Task
-                                key={v4()}
-                                task={task[1]}
-                                onEditClick={handleEditClick}
-                                setShowConfirmDialog={setShowConfirmDialog}
-                                setTaskIdToDelete={setTaskIdToDelete}
-                            />
-                        ))
-                        : <OrganizeWithSmile />}
-                    <Modal
-                        showModal={showModal}
-                        editMode={editMode}
-                        setNewTask={setNewTask}
-                        handleModalClose={handleModalClose}
-                        handleModalSubmit={handleModalSubmit}
-                        newTask={newTask}
-                    />
-                    {showConfirmDialog && (
-                        <ConfirmDialog
-                            message="Are you sure you want to delete this task?"
-                            onConfirm={handleConfirm}
-                            onCancel={handleCancel}
-                        />
-                    )}
-                </div>
+                <Button
+                    className="category-button"
+                    title="Show all"
+                    handleClick={() => handleCategoryFilter('Show all')}
+                />
+                <Button
+                    className="category-button"
+                    title="Daily tasks"
+                    handleClick={() => handleCategoryFilter('Daily task')}
+                />
+                <Button
+                    className="category-button"
+                    title="Weekly tasks"
+                    handleClick={() => handleCategoryFilter('Weekly task')}
+                />
+                {tasks.length > 0 &&
+                    <div className="export-button">
+                        <button className='category-button' onClick={handleExportTasks}>
+                            <CSVLink data={dataForExport}>Download current tasks</CSVLink>
+                        </button>
+                    </div>}
             </div>
-        </>
+            <div className="content">
+                {tasks.length > 0
+                    ? tasks.map((task) => (
+                        <Task
+                            key={v4()}
+                            task={task[1]}
+                            onEditClick={handleEditClick}
+                            setShowConfirmDialog={setShowConfirmDialog}
+                            setTaskIdToDelete={setTaskIdToDelete}
+                        />
+                    ))
+                    : <OrganizeWithSmile />}
+                <Modal
+                    showModal={showModal}
+                    editMode={editMode}
+                    setNewTask={setNewTask}
+                    handleModalClose={handleModalClose}
+                    handleModalSubmit={handleModalSubmit}
+                    newTask={newTask}
+                />
+                {showConfirmDialog && (
+                    <ConfirmDialog
+                        message="Are you sure you want to delete this task?"
+                        onConfirm={handleConfirm}
+                        onCancel={handleCancel}
+                    />
+                )}
+            </div>
+        </div>
     );
 }
 
 export default isLoggedIn(Main);
+export { Main as PureMain }

@@ -7,7 +7,7 @@ export default function Task({
     setShowConfirmDialog,
     setTaskIdToDelete
 }) {
-    const { userData } = useAuth();
+    const { userData } = useAuth() || {};
     const { title, description, taskId, timestamp, category } = task;
     const date = new Date(timestamp.seconds * 1000);
 
@@ -28,7 +28,7 @@ export default function Task({
     }
 
     return (
-        <div className={`task ${taskClass}`}>
+        <div className={`task ${taskClass}`} data-testid="task-container">
             <div className="task-note">
                 <BsFillPinAngleFill size={50} className={`pin ${pinClass}`}/>
                 <div className="note-content">

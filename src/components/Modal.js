@@ -11,7 +11,7 @@ export default function Modal({
     return (
         <>
             {showModal && (
-                <div className="modal">
+                <div className="modal" data-testid="modal-container">
                     <div className="modal-content">
                         <h2>{editMode ? 'Edit Task' : 'Add Task'}</h2>
                         <label>Title</label>
@@ -20,7 +20,7 @@ export default function Modal({
                             value={newTask.title}
                             onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
                         />
-                        <label >Description</label>
+                        <label>Description</label>
                         <textarea
                             value={newTask.description}
                             onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
@@ -36,10 +36,10 @@ export default function Modal({
                             <option value="Weekly task">Weekly task</option>
                         </select>
                         <div className="modal-buttons">
-                            <button className="modal-button" onClick={handleModalClose}>
+                            <button className="modal-button" onClick={handleModalClose} data-testid="modal-cancel-btn">
                                 Cancel
                             </button>
-                            <button className="modal-button" onClick={handleModalSubmit}>
+                            <button className="modal-button" onClick={handleModalSubmit} data-testid="modal-save-btn">
                                 {editMode ? 'Save' : 'Add Task'}
                             </button>
                         </div>

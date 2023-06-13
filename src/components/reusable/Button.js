@@ -5,7 +5,7 @@ export default function Button({
 }) {
 
     return (
-        <button className={className} onClick={handleClick}>
+        <button className={className} onClick={handleClick} data-testid="button-container">
             {title} 
         </button>
     );

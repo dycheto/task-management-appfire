@@ -14,14 +14,20 @@ const Register = () => {
     const [password, setPassword] = useState(``);
     const [repeatPass, setRepeatPass] = useState(``);
 
-    const { setUserData } = useAuth();
+    const { setUserData } = useAuth() || {};
     const navigate = useNavigate()
 
     const handleRegiser = async (e) => {
         e.preventDefault();
 
+        if(displayName == "" || email == ''){
+            alert("All fields are required!");
+            return
+        }
+
         if (password !== repeatPass) {
             alert(`Passwords does not match!`);
+            return;
         }
 
         try {
@@ -41,12 +47,11 @@ const Register = () => {
 
         } catch (error) {
             alert(error.message);
-            console.log(error.message);
         }
     };
 
     return (
-        <div className="formContainer">
+        <div className="formContainer" data-testid="register-container">
             <div className="formWrapper">
                 <img src={darkLogoImgURL} alt="" />
                 <span className="title">Register</span>
@@ -55,7 +60,7 @@ const Register = () => {
                     <input type="email" placeholder="email" name='email' onChange={(e) => setEmail(e.target.value)} />
                     <input type="password" placeholder="password" name='password' onChange={(e) => setPassword(e.target.value)} />
                     <input type="password" placeholder="repeat password" name='repeatPassword' onChange={(e) => setRepeatPass(e.target.value)} />
-                    <button>Sing up</button>
+                    <button>Sign up</button>
                 </form>
                 <p>Already have an account? <Link to={'/'}>Login</Link></p>
             </div>
@@ -63,5 +68,5 @@ const Register = () => {
     );
 }
 
-export default isNotLoggedIn(Register)
-
+export default isNotLoggedIn(Register);
+export {Register as PureRegister};

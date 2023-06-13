@@ -8,14 +8,14 @@ export default function Header({
 }) {
     const navigate = useNavigate();
 
-    const { isAuthenticated, userData } = useAuth();
+    const { isAuthenticated, userData } = useAuth() || {};
     const handleLogoClick = () => {
         navigate('/')
     }
 
     return (
-        <header className="header">
-            <img className="logo" aria-label='logo' src={whiteLogoImgURL} alt="Logo" onClick={handleLogoClick} />
+        <header className="header" data-testid="header-container">
+            <img className="logo" aria-label='logo' src={whiteLogoImgURL} alt="logo-img" onClick={handleLogoClick} />
             {isAuthenticated &&
                 <div className="user-info">
                     <strong className="username">Welcome, {userData.displayName}!</strong>
@@ -24,7 +24,6 @@ export default function Header({
                     </button>
                 </div>
             }
-
         </header>
     );
 };

@@ -13,7 +13,8 @@ import PageNotFound from './pages/PageNotFound';
 
 function App() {
 
-  const { setUserData, isAuthenticated } = useAuth();
+  const { setUserData } = useAuth() || {};
+  
   const navigate = useNavigate();
 
   const handleLogout = () => {

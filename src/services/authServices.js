@@ -8,7 +8,6 @@ export const login = async (email, password) => {
         return await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
         alert(error.message);
-        console.log(error.message);
     }
 }
 

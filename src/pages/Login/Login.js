@@ -11,7 +11,7 @@ const Login = () => {
 
     const [email, setEmail] = useState(``);
     const [password, setPassword] = useState(``);
-    const { setUserData } = useAuth();
+    const { setUserData } = useAuth() || {};
 
     function handleLogin(e) {
         e.preventDefault();
@@ -28,19 +28,18 @@ const Login = () => {
                 navigate(`/main`);
             })
             .catch(err => {
-                console.log(err);
             })
     }
 
     return (
-        <div className="formContainer">
+        <div className="formContainer" data-testid="login-container">
             <div className="formWrapper">
                 <img src={darkLogoImgURL} alt="" />
                 <span className="title">Login</span>
                 <form action="POST" onSubmit={handleLogin}>
                     <input type="email" placeholder="email" name='email' onChange={(e) => setEmail(e.target.value)} />
                     <input type="password" placeholder="password" name='password' onChange={(e) => setPassword(e.target.value)} />
-                    <button>Sing in</button>
+                    <button>Sign in</button>
                 </form>
                 <p>You don't have an account? <Link to={'/register'}>Register</Link></p>
             </div>
@@ -49,4 +48,4 @@ const Login = () => {
 }
 
 export default isNotLoggedIn(Login);
-
+export {Login as PureLogin}

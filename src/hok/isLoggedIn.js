@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 export const isLoggedIn = (Component) => {
     const WrapperComponent = (props) => {
 
-        const { isAuthenticated } = useAuth();
+        const { isAuthenticated } = useAuth() || {};
         const location = useLocation();
 
         if (isAuthenticated) {
