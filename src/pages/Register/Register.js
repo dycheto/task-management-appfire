@@ -6,6 +6,7 @@ import { auth } from '../../firebase';
 import { useAuth } from '../../hooks/useAuth';
 import { isNotLoggedIn } from '../../hok/isNotLoggedIn';
 import { darkLogoImgURL } from '../../Data/imagesData';
+import AlertModal from '../../components/reusable/AlertModal';
 
 const Register = () => {
 
@@ -13,6 +14,8 @@ const Register = () => {
     const [email, setEmail] = useState(``);
     const [password, setPassword] = useState(``);
     const [repeatPass, setRepeatPass] = useState(``);
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
 
     const { setUserData } = useAuth() || {};
     const navigate = useNavigate()
@@ -20,13 +23,15 @@ const Register = () => {
     const handleRegiser = async (e) => {
         e.preventDefault();
 
-        if(displayName == "" || email == ''){
-            alert("All fields are required!");
+        if (displayName == "" || email == '') {
+            setAlertMessage("All fields are required!")
+            setShowAlert(true);
             return
         }
 
         if (password !== repeatPass) {
-            alert(`Passwords does not match!`);
+            setAlertMessage(`Passwords does not match!`);
+            setShowAlert(true);
             return;
         }
 
@@ -46,9 +51,14 @@ const Register = () => {
             }
 
         } catch (error) {
-            alert(error.message);
         }
     };
+
+
+    const handleCloseAlert = () => {
+        setShowAlert(false);
+    };
+
 
     return (
         <div className="formContainer" data-testid="register-container">
@@ -64,9 +74,13 @@ const Register = () => {
                 </form>
                 <p>Already have an account? <Link to={'/'}>Login</Link></p>
             </div>
+            <AlertModal
+                isOpen={showAlert}
+                title={alertMessage}
+                onClose={handleCloseAlert} />
         </div>
     );
 }
 
 export default isNotLoggedIn(Register);
-export {Register as PureRegister};
+export { Register as PureRegister };

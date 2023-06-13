@@ -4,32 +4,38 @@ import * as authServices from '../../services/authServices';
 import { useAuth } from '../../hooks/useAuth';
 import { isNotLoggedIn } from '../../hok/isNotLoggedIn';
 import { darkLogoImgURL } from '../../Data/imagesData';
-
+import AlertModal from '../../components/reusable/AlertModal';
 
 const Login = () => {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState(``);
     const [password, setPassword] = useState(``);
+    const [showAlert, setShowAlert] = useState(false);
     const { setUserData } = useAuth() || {};
 
     function handleLogin(e) {
         e.preventDefault();
 
         if (!email || !password) {
-            alert('All fields are required!');
+            setShowAlert(true)
             return;
         }
-
-        authServices.login(email, password)
-            .then((userCredentials) => {
-
-                setUserData(userCredentials.user);
-                navigate(`/main`);
-            })
-            .catch(err => {
-            })
     }
+
+    authServices.login(email, password)
+        .then((userCredentials) => {
+
+            setUserData(userCredentials.user);
+            navigate(`/main`);
+        })
+        .catch(err => {
+        })
+
+    const handleCloseAlert = () => {
+        setShowAlert(false);
+    };
+
 
     return (
         <div className="formContainer" data-testid="login-container">
@@ -43,9 +49,14 @@ const Login = () => {
                 </form>
                 <p>You don't have an account? <Link to={'/register'}>Register</Link></p>
             </div>
+            <AlertModal
+                isOpen={showAlert}
+                title={"All fields are required!"}
+                onClose={handleCloseAlert}
+            />
         </div>
     );
 }
 
 export default isNotLoggedIn(Login);
-export {Login as PureLogin}
+export { Login as PureLogin }

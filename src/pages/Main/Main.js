@@ -14,8 +14,9 @@ import ConfirmDialog from '../../components/reusable/ConfirmDialog';
 import { onSnapshot, doc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { isLoggedIn } from '../../hok/isLoggedIn';
+import AlertModal from '../../components/reusable/AlertModal';
 
-const Main = ({props}) => {
+const Main = ({ props }) => {
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
     const [TaskIdToDelete, setTaskIdToDelete] = useState('');
     const [editMode, setEditMode] = useState(false);
@@ -25,7 +26,8 @@ const Main = ({props}) => {
     const [category, setCategory] = useState('');
     const [dataForExport, setDataForExport] = useState([]);
     const { userData } = useAuth() || {};
-
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
 
     useEffect(() => {
         const unsub = onSnapshot(doc(db, "userTasks", userData.uid), (doc) => {
@@ -68,7 +70,8 @@ const Main = ({props}) => {
 
     const handleModalSubmit = () => {
         if (newTask.description === '' || newTask.title === '') {
-            alert(`All fields are required!`);
+            setAlertMessage(`All fields are required!`)
+            setShowAlert(true);
             return;
         }
 
@@ -100,14 +103,20 @@ const Main = ({props}) => {
 
     const handleExportTasks = () => {
         if (tasks.length === 0) {
-            alert("There are no tasks to export!");
+            setAlertMessage(`All fields are required!`)
+            setShowAlert(true);
             return;
         }
         const data = formatServices.formatData(tasks);
         setDataForExport(data);
     }
 
+    const handleCloseAlert = () => {
+        setShowAlert(false);
+    };
+
     return (
+
         <div className="container" data-testid="main-container">
             <div className="side-bar" data-testid="side-container">
 
@@ -167,6 +176,11 @@ const Main = ({props}) => {
                     />
                 )}
             </div>
+            <AlertModal
+                isOpen={showAlert}
+                title={alertMessage}
+                onClose={handleCloseAlert}
+            />
         </div>
     );
 }
