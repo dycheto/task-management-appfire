@@ -7,7 +7,6 @@ export default function Modal({
     newTask
 }) {
 
-    
 
     return (
         <>
@@ -26,14 +25,15 @@ export default function Modal({
                             value={newTask.description}
                             onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
                             className="description-field"
+                            maxLength={300}
                         ></textarea>
                         <label>Category</label>
                         <select
                             value={newTask.category}
                             onChange={(e) => setNewTask({ ...newTask, category: e.target.value })}
                         >
-                            <option value="Daily tasks">Daily tasks</option>
-                            <option value="Weekly tasks">Weekly tasks</option>
+                            <option value="Daily task">Daily task</option>
+                            <option value="Weekly task">Weekly task</option>
                         </select>
                         <div className="modal-buttons">
                             <button className="modal-button" onClick={handleModalClose}>
