@@ -1,0 +1,2 @@
+export const darkLogoImgURL = "https://firebasestorage.googleapis.com/v0/b/task-management-appfire.appspot.com/o/logo-black.svg?alt=media&token=ed5b13b2-7a36-4eab-8111-d005bdc232ef&_gl=1*auinds*_ga*MTY4MDk3OTI3Mi4xNjc0NzI1MzA2*_ga_CW55HF8NVT*MTY4NjYwODM2OC43NC4xLjE2ODY2MDg0MTIuMC4wLjA.";
+export const whiteLogoImgURL = "https://firebasestorage.googleapis.com/v0/b/task-management-appfire.appspot.com/o/logo-white.svg?alt=media&token=440b5905-91f2-49b9-89ee-335a18d4d91d&_gl=1*n3npkc*_ga*MTY4MDk3OTI3Mi4xNjc0NzI1MzA2*_ga_CW55HF8NVT*MTY4NjYwODM2OC43NC4xLjE2ODY2MDgzNzkuMC4wLjA.";
