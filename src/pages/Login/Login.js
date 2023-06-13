@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import './Login.css';
 import { useNavigate, Link } from 'react-router-dom';
 import * as authServices from '../../services/authServices';
 import { useAuth } from '../../hooks/useAuth';
-import { isLoggedIn } from '../../hok/isLoggedIn';
+import { isNotLoggedIn } from '../../hok/isNotLoggedIn';
+import { darkLogoImgURL } from '../../Data/imagesData';
+
 
 const Login = () => {
     const navigate = useNavigate();
@@ -15,11 +16,16 @@ const Login = () => {
     function handleLogin(e) {
         e.preventDefault();
 
+        if (!email || !password) {
+            alert('All fields are required!');
+            return;
+        }
+
         authServices.login(email, password)
             .then((userCredentials) => {
 
                 setUserData(userCredentials.user);
-                navigate(`/`);
+                navigate(`/main`);
             })
             .catch(err => {
                 console.log(err);
@@ -29,7 +35,7 @@ const Login = () => {
     return (
         <div className="formContainer">
             <div className="formWrapper">
-                <h1 className="login_logo">organizeIt</h1>
+                <img src={darkLogoImgURL} alt="" />
                 <span className="title">Login</span>
                 <form action="POST" onSubmit={handleLogin}>
                     <input type="email" placeholder="email" name='email' onChange={(e) => setEmail(e.target.value)} />
@@ -42,5 +48,5 @@ const Login = () => {
     );
 }
 
-export default isLoggedIn(Login)
+export default isNotLoggedIn(Login);
 

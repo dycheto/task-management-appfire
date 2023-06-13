@@ -1,12 +1,11 @@
-import './Register.css'
-
 import { useState } from 'react';
 import * as authService from '../../services/authServices';
 import { useNavigate, Link } from 'react-router-dom';
 import { updateProfile } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useAuth } from '../../hooks/useAuth';
-import { isLoggedIn } from '../../hok/isLoggedIn';
+import { isNotLoggedIn } from '../../hok/isNotLoggedIn';
+import { darkLogoImgURL } from '../../Data/imagesData';
 
 const Register = () => {
 
@@ -14,7 +13,6 @@ const Register = () => {
     const [email, setEmail] = useState(``);
     const [password, setPassword] = useState(``);
     const [repeatPass, setRepeatPass] = useState(``);
-    const [err, setErr] = useState(false);
 
     const { setUserData } = useAuth();
     const navigate = useNavigate()
@@ -42,7 +40,6 @@ const Register = () => {
             }
 
         } catch (error) {
-            setErr(true);
             alert(error.message);
             console.log(error.message);
         }
@@ -51,7 +48,7 @@ const Register = () => {
     return (
         <div className="formContainer">
             <div className="formWrapper">
-                <h1 className="login_logo">organizeIt</h1>
+                <img src={darkLogoImgURL} alt="" />
                 <span className="title">Register</span>
                 <form action="POST" onSubmit={handleRegiser}>
                     <input type="text" placeholder="username" name='displayName' onChange={(e) => setDisplayName(e.target.value)} />
@@ -60,11 +57,11 @@ const Register = () => {
                     <input type="password" placeholder="repeat password" name='repeatPassword' onChange={(e) => setRepeatPass(e.target.value)} />
                     <button>Sing up</button>
                 </form>
-                <p>Already have an account? <Link to={'/login'}>Login</Link></p>
+                <p>Already have an account? <Link to={'/'}>Login</Link></p>
             </div>
         </div>
     );
 }
 
-export default isLoggedIn(Register)
+export default isNotLoggedIn(Register)
 
