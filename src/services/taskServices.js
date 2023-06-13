@@ -2,19 +2,12 @@ import {
     setDoc,
     doc,
     getDoc,
-    onSnapshot,
     updateDoc,
     deleteField,
-    collection,
-    where,
-    query,
-    getDocs
 } from "firebase/firestore";
 import { Timestamp } from 'firebase/firestore';
 import { db } from "../firebase";
 import { v4 } from 'uuid';
-import * as sortServices from '../services/sortServices'
-
 
 export const addTask = async (task, userData) => {
     const userId = userData.uid;
@@ -49,22 +42,6 @@ export const addTask = async (task, userData) => {
     }
 }
 
-export const getAll = async (userData) => {
-    const userId = userData.uid;
-
-    try {
-        const docRef = doc(db, "userTasks", userId);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-            return docSnap.data();
-        }
-
-    } catch (error) {
-        throw new Error(error.message)
-    }
-}
-
 export const updateTask = async (task, userData) => {
     const userId = userData.uid;
     const taskId = task.taskId;
@@ -79,22 +56,6 @@ export const updateTask = async (task, userData) => {
                 category: task.category
             }
         })
-    } catch (error) {
-        throw new Error(error.message)
-    }
-}
-
-export const getByCategory = async (userData) => {
-    const userId = userData.uid;
-
-    try {
-        const docRef = doc(db, "userTasks", userId);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-            return docSnap.data();
-        }
-
     } catch (error) {
         throw new Error(error.message)
     }
